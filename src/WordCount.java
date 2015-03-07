@@ -34,9 +34,11 @@ public class WordCount {
  // angle brackets indicate that the Reducer class has input key of type text, input val of IntWritable,
  // output key of type Text, output key of IntWritable
       extends Reducer<Text,IntWritable,Text,IntWritable> {
-   private IntWritable result = new IntWritable();
+	 
+   //private IntWritable result = new IntWritable();
    private Text mostFrequentKey; // text is just Text type?
    private IntWritable mostFrequentKeyCount; // IntWritable is Int type
+   
    public void reduce(Text key, Iterable<IntWritable> values,
                       Context context
                       ) throws IOException, InterruptedException {
@@ -44,9 +46,28 @@ public class WordCount {
      for (IntWritable val : values) {
        sum += val.get();
      }
-     result.set(sum);
-     context.write(key, result);
+     if(mostFrequentKeyCount == null){
+    	// why does key need to be cast to string? Both key param and mostFrequentKey are Text type.
+    	 // why "new" Text?
+    	 mostFrequentKey = new Text(key.toString());
+    	 mostFrequentKeyCount = new IntWritable(sum);
+     } else {
+    	 IntWritable IWsum = new IntWritable(sum);
+    	 if(mostFrequentKeyCount.compareTo(IWsum) > 0){
+    		 // if mostFrequentKeyCount less than IWsum
+    		 mostFrequentKey = new Text(key.toString());
+    		 mostFrequentKeyCount = new IntWritable(sum);    		 
+    	 }
+     }
+     //result.set(sum);
+    //context.write(key, result);
    }
+   
+   @Override
+	protected void cleanup(Context context)
+			throws IOException, InterruptedException {
+		context.write(mostFrequentKey, mostFrequentKeyCount);
+	}
  }
 
  	// compiler sees that this class (WordCount) has main, so will execute this class's main.
