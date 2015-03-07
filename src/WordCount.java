@@ -53,7 +53,7 @@ public class WordCount {
     	 mostFrequentKeyCount = new IntWritable(sum);
      } else {
     	 IntWritable IWsum = new IntWritable(sum);
-    	 if(mostFrequentKeyCount.compareTo(IWsum) > 0){
+    	 if(mostFrequentKeyCount.compareTo(IWsum) < 0){ // if mostFrequentKeyCount < IWSum => -1
     		 // if mostFrequentKeyCount less than IWsum
     		 mostFrequentKey = new Text(key.toString());
     		 mostFrequentKeyCount = new IntWritable(sum);    		 
@@ -64,7 +64,7 @@ public class WordCount {
    }
    
    @Override
-	protected void cleanup(Context context)
+	protected void cleanup(Context context) // just need Context context here, not sure why: http://stackoverflow.com/questions/13904061/min-max-count-using-map-reduce
 			throws IOException, InterruptedException {
 		context.write(mostFrequentKey, mostFrequentKeyCount);
 	}
