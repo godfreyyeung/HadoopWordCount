@@ -1,5 +1,6 @@
 # HadoopWordCount
-Learning about Hadoop in CS440, writing real Java for the first time
+Learning about Hadoop in CS440, writing real Java for the first time.
+
 Combining examples from:
 
 http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Source_Code
