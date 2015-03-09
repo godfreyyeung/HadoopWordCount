@@ -1,7 +1,7 @@
 # HadoopWordCount
 Learning about Hadoop in CS440, writing "real" Java for the first time.
 
-About:
+ABOUT:
 
 For a given set of input text files, each containing a list of names (one per line), my mapreduce program will calculate the highest frequency word appearing across all those files. 
 
